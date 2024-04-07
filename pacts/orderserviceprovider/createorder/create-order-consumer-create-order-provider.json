@@ -1,0 +1,158 @@
+{
+  "consumer": {
+    "name": "create-order-consumer"
+  },
+  "interactions": [
+    {
+      "description": "create order request",
+      "interactionMarkup": {
+        "markup": "```protobuf\nmessage CreateOrderResponse {\n    string order_number = 1;\n}\n```\n",
+        "markupType": "COMMON_MARK"
+      },
+      "pending": false,
+      "pluginConfiguration": {
+        "protobuf": {
+          "descriptorKey": "10f9cfe31e7461f5b13f53130ec608c1",
+          "service": "Order/CreateOrder"
+        }
+      },
+      "request": {
+        "contents": {
+          "content": "CgEzEg50ZXN0QGdtYWlsLmNvbQ==",
+          "contentType": "application/protobuf;message=CreateOrderRequest",
+          "contentTypeHint": "BINARY",
+          "encoded": "base64"
+        },
+        "matchingRules": {
+          "body": {
+            "$.customer_email": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "notEmpty"
+                }
+              ]
+            },
+            "$.order_number": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ]
+            }
+          }
+        },
+        "metadata": {
+          "contentType": "application/protobuf;message=CreateOrderRequest"
+        }
+      },
+      "response": [
+        {
+          "contents": {
+            "content": "CgE0",
+            "contentType": "application/protobuf;message=CreateOrderResponse",
+            "contentTypeHint": "BINARY",
+            "encoded": "base64"
+          },
+          "matchingRules": {
+            "body": {
+              "$.order_number": {
+                "combine": "AND",
+                "matchers": [
+                  {
+                    "match": "number"
+                  }
+                ]
+              }
+            }
+          },
+          "metadata": {
+            "contentType": "application/protobuf;message=CreateOrderResponse"
+          }
+        }
+      ],
+      "transport": "grpc",
+      "type": "Synchronous/Messages"
+    },
+    {
+      "description": "create order request - invalid",
+      "interactionMarkup": {
+        "markup": "```protobuf\nmessage CreateOrderResponse {\n}\n```\n",
+        "markupType": "COMMON_MARK"
+      },
+      "pending": false,
+      "pluginConfiguration": {
+        "protobuf": {
+          "descriptorKey": "10f9cfe31e7461f5b13f53130ec608c1",
+          "service": "Order/CreateOrder"
+        }
+      },
+      "request": {
+        "contents": {
+          "content": "CgEz",
+          "contentType": "application/protobuf;message=CreateOrderRequest",
+          "contentTypeHint": "BINARY",
+          "encoded": "base64"
+        },
+        "matchingRules": {
+          "body": {
+            "$.order_number": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ]
+            }
+          }
+        },
+        "metadata": {
+          "contentType": "application/protobuf;message=CreateOrderRequest"
+        }
+      },
+      "response": [
+        {
+          "contents": {
+            "content": "",
+            "contentType": "application/protobuf;message=CreateOrderResponse",
+            "contentTypeHint": "BINARY",
+            "encoded": "base64"
+          },
+          "metadata": {
+            "contentType": "application/protobuf;message=CreateOrderResponse",
+            "grpc-message": "Invalid email format",
+            "grpc-status": "INTERNAL"
+          }
+        }
+      ],
+      "transport": "grpc",
+      "type": "Synchronous/Messages"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.4.5",
+      "mockserver": "1.1.1",
+      "models": "1.1.2"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    },
+    "plugins": [
+      {
+        "configuration": {
+          "10f9cfe31e7461f5b13f53130ec608c1": {
+            "protoDescriptors": "CoMECgtvcmRlci5wcm90bxIMb3JkZXJzZXJ2aWNlIl4KEkNyZWF0ZU9yZGVyUmVxdWVzdBIhCgxvcmRlcl9udW1iZXIYASABKAlSC29yZGVyTnVtYmVyEiUKDmN1c3RvbWVyX2VtYWlsGAIgASgJUg1jdXN0b21lckVtYWlsIjgKE0NyZWF0ZU9yZGVyUmVzcG9uc2USIQoMb3JkZXJfbnVtYmVyGAEgASgJUgtvcmRlck51bWJlciI0Cg9HZXRPcmRlclJlcXVlc3QSIQoMb3JkZXJfbnVtYmVyGAEgASgJUgtvcmRlck51bWJlciJcChBHZXRPcmRlclJlc3BvbnNlEiEKDG9yZGVyX251bWJlchgBIAEoCVILb3JkZXJOdW1iZXISJQoOY3VzdG9tZXJfZW1haWwYAiABKAlSDWN1c3RvbWVyRW1haWwyqgEKBU9yZGVyElQKC0NyZWF0ZU9yZGVyEiAub3JkZXJzZXJ2aWNlLkNyZWF0ZU9yZGVyUmVxdWVzdBohLm9yZGVyc2VydmljZS5DcmVhdGVPcmRlclJlc3BvbnNlIgASSwoIR2V0T3JkZXISHS5vcmRlcnNlcnZpY2UuR2V0T3JkZXJSZXF1ZXN0Gh4ub3JkZXJzZXJ2aWNlLkdldE9yZGVyUmVzcG9uc2UiAEIDWgEuYgZwcm90bzM=",
+            "protoFile": "syntax = \"proto3\";\n\npackage orderservice;\n\noption go_package = \".\";\n\nmessage CreateOrderRequest {\n  string order_number = 1;\n  string customer_email = 2;\n}\n\nmessage CreateOrderResponse{\n  string order_number = 1;\n}\n\nmessage GetOrderRequest{\n  string order_number =1;\n}\n\nmessage GetOrderResponse{\n  string order_number =1;\n  string customer_email = 2;\n}\n\nservice Order{\n  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse){}\n  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse){}\n}\n"
+          }
+        },
+        "name": "protobuf",
+        "version": "0.3.13"
+      }
+    ]
+  },
+  "provider": {
+    "name": "create-order-provider"
+  }
+}

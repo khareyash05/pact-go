@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package orderservice;
+
+option go_package = ".";
+
+message CreateOrderRequest {
+  string order_number = 1;
+  string customer_email = 2;
+}
+
+message CreateOrderResponse{
+  string order_number = 1;
+}
+
+message GetOrderRequest{
+  string order_number =1;
+}
+
+message GetOrderResponse{
+  string order_number =1;
+  string customer_email = 2;
+}
+
+service Order{
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse){}
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse){}
+}
